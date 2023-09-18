@@ -22,6 +22,9 @@ import { GetMiningData, GetMiningRes } from "./services/mining/type";
 import ReactApexChart from 'react-apexcharts';
 import Pagination from "./components/Paggination";
 import TableLoading from "./components/TableLoading";
+import { useDispatch } from "react-redux";
+import { setStoreDataMining } from "./redux/action/dashboard";
+import { store } from "./redux/store";
  
 const TABLE_HEAD = ["Kode Provinsi","Nama Provinsi", "Jenis Galian", "Jumlah Produksi", "Stuan", "Tahun"];
 const chartOptions = {
@@ -90,8 +93,12 @@ interface PropsSeries {
   data: Array<number>
 }
 export default function App() {
+  const dispatch = useDispatch();
+  const stores = store.getState();
+  const dataMiningAll = stores.dashboard.dataMining;
+
   const [dataMining, setDataMining] = useState<GetMiningData[] | null>(null);
-  const [dataMiningAll, setDataMiningAll] = useState<GetMiningData[] | null>(null);
+  
   const [dataSeries, setDataSeries] = useState<PropsSeries[] | null>(null);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -106,7 +113,8 @@ export default function App() {
       search: valueSearch
     }
     getDataMining(params).then((data: GetMiningRes) => {
-      setDataMiningAll(data.data);
+      dispatch(setStoreDataMining(data.data));
+
       setDataMining(data.data.slice(0,10));
       const totalData =  (data.data.length / 10).toFixed(0);
       setTotalPage(parseInt(totalData))
