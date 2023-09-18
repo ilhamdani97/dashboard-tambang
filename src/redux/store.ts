@@ -6,9 +6,9 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { rootReducer } from './reducer';
 const persistConfig = {
-  key: 'authType',
+  key: 'root',
   storage: storage,
-  whitelist: ['authType'] // which reducer want to store
+  whitelist: ['root'] // which reducer want to store
 };
 const pReducer = persistReducer(persistConfig, rootReducer);
 const middleware = applyMiddleware(thunk, logger);
