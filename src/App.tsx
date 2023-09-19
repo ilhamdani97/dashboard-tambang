@@ -137,7 +137,7 @@ export default function App() {
       data: []
     };
     const data16 : PropsSeries = {
-      name: '2015',
+      name: '2016',
       data: []
     };
     for (let i = yearStart; i <= yearEnd; i++) {
